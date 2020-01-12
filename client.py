@@ -4,7 +4,6 @@ import sys
 
 print("Welcome to file management client. ")
 
-
 try:
     SOC = socket.socket()
     HOST = '127.0.0.1'

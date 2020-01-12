@@ -120,7 +120,9 @@ class Server:
                 ["create_folder <name>", "Create a new folder with the <name> in the current working directory"],
                 ["register <username> <password> <privileges>", "Register a new user with the <privileges> to the server using the <username> and <password> provided"],
                 ["login <username> <password>", "Log in the user conforming with <username>"],
-                ["delete <username> <password>", "Delete the user conforming with <username> from the server"]]
+                ["delete <username> <password>", "Delete the user conforming with <username> from the server"],
+                ["issued", "Check which commands you entered"],
+                ["clear", "Clear the issued commands"]]
         output += "{:<50}".format(column[0]) + "   -->   " + column[1] + "\n"
         for row in data:
             output += "{:<50}".format(row[0]) + "   -->   " + row[1] + "\n"
@@ -178,6 +180,12 @@ class Server:
     def read_file(self, path, address):
         """Read file"""
         if self.login_validation[address] is not None:
+            if path == '':
+                for path, value in self.read_file_status.items():
+                    subpath = os.path.join(DATA_PATH, self.login_validation[address], self.users_current_directory[self.login_validation[address]])
+                    if subpath in path:
+                        self.read_file_status[path] = 0
+                return '\nSuccessfully closed any opened file.'
             files = []
             for file in os.listdir(os.path.join(DATA_PATH, self.login_validation[address], self.users_current_directory[self.login_validation[address]])):
                 if os.path.isfile(os.path.join(DATA_PATH, self.login_validation[address], self.users_current_directory[self.login_validation[address]], file)):
